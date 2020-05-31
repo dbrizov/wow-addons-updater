@@ -39,7 +39,7 @@ def find_addon_latest_version(addon_name, game_version):
         cols = row.find_all("td")
         release_type = cols[0].text.strip()
 
-        if release_type == "R":
+        if release_type == "R":  # R stands for Release
             addon_version = cols[1].text.strip()
             addon_game_version = cols[4].text.strip()
             addon_url = f"{BASE_URL}{cols[1].find('a')['href']}"
@@ -89,6 +89,7 @@ def extract_addon(addon: Addon):
 def get_config():
     current_directory = os.path.dirname(os.path.realpath(__file__))
     file_path = f"{current_directory}/config.json"
+    
     with open(file_path, "r") as file_stream:
         return json.load(file_stream)
 
