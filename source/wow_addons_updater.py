@@ -89,7 +89,7 @@ def extract_addon(addon: Addon):
 def get_config():
     current_directory = os.path.dirname(os.path.realpath(__file__))
     file_path = f"{current_directory}/config.json"
-    
+
     with open(file_path, "r") as file_stream:
         return json.load(file_stream)
 
