@@ -6,9 +6,9 @@ from bs4 import BeautifulSoup
 
 
 BASE_URL = "https://www.curseforge.com"
-GAME_VERSION_RETAIL = "1738749986%3A517"
-GAME_VERSION_CLASSIC = "1738749986%3A67408"
-HTTP = cloudscraper.create_scraper()
+GAME_VERSION_RETAIL = "1738749986%3A517"  # URL argument for retail addons
+GAME_VERSION_CLASSIC = "1738749986%3A67408"  # URL argument for classic addons
+HTTP = cloudscraper.create_scraper()  # HTTP requester
 
 
 class Addon:
