@@ -50,5 +50,5 @@ The name of the addon in the config file is the last part of the URL - `deadly-b
 
 When you run the script it will do 3 things:
 - **Collect the latest versions of the addons**
-- **Download the addons** - keep in mind that it always downloads them, even if they are up to date. I might add a pre-filter in the collection phase, so it downloads only the outdated ones.
+- **Download the addons** - keep in mind that it always downloads them, even if they are up to date. I might add a pre-filter in the collecting phase, so it downloads only the outdated ones.
 - **Extract the addons**
