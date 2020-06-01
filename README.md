@@ -1,5 +1,5 @@
 # World of Warcraft Addons Updater
-[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/dbrizov/NaughtyAttributes/blob/master/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/dbrizov/wow-addons-updater/blob/master/LICENSE.md)
 
 A simple python script that automatically updates your World of Warcraft addons
 
