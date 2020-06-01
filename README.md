@@ -4,7 +4,6 @@ A simple python script that automatically updates your World of Warcraft addons
 ![wow_addons_updater.gif](https://github.com/dbrizov/wow-addons-updater/blob/master/docs/wow_addons_updater.gif)
 
 ## Requirements
-If you want to run the script manually, you will need:
 - Python 3.6+
 - [bs4](https://www.crummy.com/software/BeautifulSoup)
 - [cloudscraper](https://github.com/VeNoMouS/cloudscraper)
@@ -14,14 +13,11 @@ pip install bs4
 pip install cloudscraper
 ```
 
-Otherwise, you can just run the `wow_addons_updater.exe`
-
 ## How It Works
-Place the `config.json` and `wow_addons_updater.py` files inside the **AddOns** folder.<br>
-If you are using the .exe, you need to place the `wow_addons_updater.exe` instead of `wow_addons_updater.py`.
+Place the `wow_addons_updater.py` and `wow_addons_updater.config` files inside the **AddOns** folder.
 
-Before running the script or .exe, you need to configure which addons you want to download.<br>
-The `config.json` looks like this:
+Before running the script, you need to configure which addons you want to download.<br>
+The `wow_addons_updater.config` looks like this:
 ```
 {
     "game-version": "retail",
