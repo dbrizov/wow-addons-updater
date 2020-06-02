@@ -1,5 +1,5 @@
 # World of Warcraft Addons Updater
-[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/dbrizov/NaughtyAttributes/blob/master/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/dbrizov/wow-addons-updater/blob/master/LICENSE)
 
 A simple python script that automatically updates your World of Warcraft addons
 
@@ -50,5 +50,5 @@ The name of the addon in the config file is the last part of the URL - `deadly-b
 
 When you run the script it will do 3 things:
 - **Collect the latest versions of the addons**
-- **Download the addons** - keep in mind that it always downloads them, even if they are up to date. I might add a pre-filter in the collection phase, so it downloads only the outdated ones.
+- **Download the addons** - keep in mind that it always downloads them, even if they are up to date. I might add a pre-filter in the collecting phase, so it downloads only the outdated ones.
 - **Extract the addons**
