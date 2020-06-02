@@ -1,7 +1,7 @@
 import os
-import json
 import zipfile
 import cloudscraper
+from configparser import ConfigParser
 from requests import ReadTimeout
 from requests import HTTPError
 from bs4 import BeautifulSoup
@@ -99,17 +99,17 @@ def extract_addon(addon: Addon):
 
 def get_config():
     current_directory = os.path.dirname(os.path.realpath(__file__))
-    file_path = f"{current_directory}/wow_addons_updater.config"
-
-    with open(file_path, "r") as file_stream:
-        return json.load(file_stream)
+    file_path = f"{current_directory}/wow_addons_updater.ini"
+    config = ConfigParser(allow_no_value=True)
+    config.read(file_path)
+    return config
 
 
 def collect_addons():
     config = get_config()
-    game_version_string = config["game-version"]
+    game_version_string = config["General"]["game_version"]
     game_version = GAME_VERSION_RETAIL if (game_version_string == "retail") else GAME_VERSION_CLASSIC
-    addon_names = config["addons"]
+    addon_names = config["Addons"]
 
     found_addons = list()
     for addon_name in addon_names:
