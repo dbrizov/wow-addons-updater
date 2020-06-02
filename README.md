@@ -16,32 +16,31 @@ pip install cloudscraper
 ```
 
 ## How It Works
-Place the `wow_addons_updater.py` and `wow_addons_updater.config` files inside the **AddOns** folder.
+Place the `wow_addons_updater.py` and `wow_addons_updater.ini` files inside the **AddOns** folder.
 
 Before running the script, you need to configure which addons you want to download.<br>
-The `wow_addons_updater.config` looks like this:
+The `wow_addons_updater.ini` looks like this:
 ```
-{
-    "game-version": "retail",
-    "addons": [
-        "bagnon",
-        "deadly-boss-mods",
-        "details",
-        "easy-frames",
-        "handynotes",
-        "handynotes-visions-of-nzoth",
-        "omni-cc",
-        "pawn",
-        "personal-loot-helper",
-        "raiderio",
-        "tomtom",
-        "weakauras-2"
-    ]
-}
+[General]
+game_version = retail
+
+[Addons]
+bagnon
+deadly-boss-mods
+details
+easy-frames
+handynotes
+handynotes-visions-of-nzoth
+omni-cc
+pawn
+personal-loot-helper
+raiderio
+tomtom
+weakauras-2
 ```
 
-- **game-version** - if you are playing WoW Classic, you should replace it with `classic`
-- **addons** - this is the list of addons you want to download
+- In the **General** section you must specify the `game_version`. If you are playing WoW Classic, you must replace `retail` with `classic`
+- The **Addons** section contains the list of addons you want to download
 
 The names of the addons should be extracted from the **URLs** of the addons' pages.<br>
 Lets say for example that you want to download **Deadly Boss Mods**.<br>
