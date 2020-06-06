@@ -93,7 +93,6 @@ def find_addon_latest_version(addon_name, game_version):
 
 
 def download_addon(addon: Addon):
-    download_directory = get_download_directory()
     log(f"Downloading '{addon.to_short_string()}.zip'")
 
     try:
@@ -109,6 +108,7 @@ def download_addon(addon: Addon):
                 response = HTTP.get(f"{BASE_URL}{url}/file", timeout=HTTP_REQUEST_TIMEOUT)
                 response.raise_for_status()
 
+                download_directory = get_download_directory()
                 output_zip_file_path = f"{download_directory}/{addon.to_short_string()}.zip"
 
                 with open(output_zip_file_path, "wb") as zip_file:
@@ -125,9 +125,9 @@ def download_addon(addon: Addon):
 
 
 def extract_addon(addon: Addon):
-    download_directory = get_download_directory()
     log(f"Extracting '{addon.to_short_string()}.zip'")
 
+    download_directory = get_download_directory()
     output_zip_file_path = f"{download_directory}/{addon.to_short_string()}.zip"
 
     with zipfile.ZipFile(output_zip_file_path, "r") as zip:
