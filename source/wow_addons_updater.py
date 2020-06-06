@@ -1,9 +1,11 @@
 import os
 import zipfile
 import cloudscraper
+import logging
 from configparser import ConfigParser
 from requests import ReadTimeout
 from requests import HTTPError
+from requests import ConnectionError
 from bs4 import BeautifulSoup
 
 
@@ -11,7 +13,38 @@ BASE_URL = "https://www.curseforge.com"
 GAME_VERSION_RETAIL = "1738749986%3A517"  # URL argument for retail addons
 GAME_VERSION_CLASSIC = "1738749986%3A67408"  # URL argument for classic addons
 HTTP = cloudscraper.create_scraper()  # HTTP requester
-HTTP_REQUEST_TIMEOUT = 10  # 10 seconds
+HTTP_REQUEST_TIMEOUT = 15  # 15 seconds
+FILE_NAME = "wow_addons_updater.py"  # For some reason the build tool doesn't recognize '__file__' so I have to hardcode the name of the script file
+CURRENT_DIRECTORY = os.path.dirname(os.path.realpath(FILE_NAME))
+
+
+logging.basicConfig(filename=f"{CURRENT_DIRECTORY}/wow_addons_updater.log", filemode="w", level=logging.DEBUG)
+
+
+def log(message: str):
+    print(message)
+    logging.info(message)
+
+
+def log_error(message: str):
+    print(message)
+    logging.error(message)
+
+
+def get_config():
+    file_path = f"{CURRENT_DIRECTORY}/wow_addons_updater.ini"
+    config = ConfigParser(allow_no_value=True)
+    config.read(file_path)
+    return config
+
+
+def get_download_directory():
+    config = get_config()
+    download_directory = CURRENT_DIRECTORY
+    if "download_directory" in config["General"]:
+        download_directory = config["General"]["download_directory"].replace("\\", "/")
+
+    return download_directory
 
 
 class Addon:
@@ -29,7 +62,7 @@ class Addon:
 
 
 def find_addon_latest_version(addon_name, game_version):
-    print(f"Collecting '{addon_name}'")
+    log(f"Collecting '{addon_name}'")
 
     try:
         url = f"{BASE_URL}/wow/addons/{addon_name}/files/all?filter-game-version={game_version}"
@@ -50,15 +83,18 @@ def find_addon_latest_version(addon_name, game_version):
                 addon = Addon(addon_name, addon_version, addon_game_version, addon_url)
                 return addon
     except ReadTimeout:
-        print(f"Error: HTTP request timed out after {HTTP_REQUEST_TIMEOUT} seconds")
+        log_error(f"Error: HTTP request timed out after {HTTP_REQUEST_TIMEOUT} seconds")
     except HTTPError:
-        print(f"Error: HTTP status code {response.status_code}")
+        log_error(f"Error: HTTP status code {response.status_code}")
+    except ConnectionError:
+        log_error("Error: Can't connect to server")
 
     return None
 
 
 def download_addon(addon: Addon):
-    print(f"Downloading '{addon.to_short_string()}.zip'")
+    download_directory = get_download_directory()
+    log(f"Downloading '{addon.to_short_string()}.zip'")
 
     try:
         response = HTTP.get(addon.url, timeout=HTTP_REQUEST_TIMEOUT)
@@ -73,36 +109,29 @@ def download_addon(addon: Addon):
                 response = HTTP.get(f"{BASE_URL}{url}/file", timeout=HTTP_REQUEST_TIMEOUT)
                 response.raise_for_status()
 
-                current_directory = os.path.dirname(os.path.realpath(__file__))
-                output_zip_file_path = f"{current_directory}/{addon.to_short_string()}.zip"
+                output_zip_file_path = f"{download_directory}/{addon.to_short_string()}.zip"
 
                 with open(output_zip_file_path, "wb") as zip_file:
                     zip_file.write(response.content)
                     return True
     except ReadTimeout:
-        print(f"Error: HTTP request timed out after {HTTP_REQUEST_TIMEOUT} seconds")
+        log_error(f"Error: HTTP request timed out after {HTTP_REQUEST_TIMEOUT} seconds")
     except HTTPError:
-        print(f"Error: HTTP status code {response.status_code}")
+        log_error(f"Error: HTTP status code {response.status_code}")
+    except ConnectionError:
+        log_error("Error: Can't connect to server")
 
     return False
 
 
 def extract_addon(addon: Addon):
-    print(f"Extracting '{addon.to_short_string()}.zip'")
+    download_directory = get_download_directory()
+    log(f"Extracting '{addon.to_short_string()}.zip'")
 
-    current_directory = os.path.dirname(os.path.realpath(__file__))
-    output_zip_file_path = f"{current_directory}/{addon.to_short_string()}.zip"
+    output_zip_file_path = f"{download_directory}/{addon.to_short_string()}.zip"
 
     with zipfile.ZipFile(output_zip_file_path, "r") as zip:
-        zip.extractall(current_directory)
-
-
-def get_config():
-    current_directory = os.path.dirname(os.path.realpath(__file__))
-    file_path = f"{current_directory}/wow_addons_updater.ini"
-    config = ConfigParser(allow_no_value=True)
-    config.read(file_path)
-    return config
+        zip.extractall(download_directory)
 
 
 def collect_addons():
@@ -127,6 +156,7 @@ def collect_addons():
 
 
 def update_addons():
+    log(f"Download directory: '{get_download_directory()}'")
     addons = collect_addons()
     for addon in addons:
         extract_addon(addon)
