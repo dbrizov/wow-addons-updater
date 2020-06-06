@@ -6,6 +6,7 @@ A simple python script that automatically updates your World of Warcraft addons
 ![wow_addons_updater.gif](https://github.com/dbrizov/wow-addons-updater/blob/master/docs/wow_addons_updater.gif)
 
 ## Requirements
+If you want to run the script manually you will need:
 - Python 3.6+
 - [bs4](https://www.crummy.com/software/BeautifulSoup)
 - [cloudscraper](https://github.com/VeNoMouS/cloudscraper)
@@ -15,14 +16,17 @@ pip install bs4
 pip install cloudscraper
 ```
 
+There's also an executable file which can be found under the [releases](https://github.com/dbrizov/wow-addons-updater/releases) tab. You need version 1.3+
+
 ## How It Works
 Place the `wow_addons_updater.py` and `wow_addons_updater.ini` files inside the **AddOns** folder.
 
-Before running the script, you need to configure which addons you want to download.<br>
-The `wow_addons_updater.ini` looks like this:
+Before running the `wow_addons_updater.py` or `wow_addons_updater.exe`, you need to configure which addons you want to download.<br>
+This is done in the `wow_addons_updater.ini`file:
 ```
 [General]
 game_version = retail
+download_directory = F:\Games\World of Warcraft\_retail_\Interface\AddOns
 
 [Addons]
 bagnon
@@ -39,8 +43,12 @@ tomtom
 weakauras-2
 ```
 
-- In the **General** section you must specify the `game_version`. If you are playing WoW Classic, you must replace `retail` with `classic`
-- The **Addons** section contains the list of addons you want to download
+**[General]**
+- **game_version** - if you are playing WoW Classic, you must replace `retail` with `classic`
+- **download_directory** - this is the path to your addons folder
+
+**[Addons]**
+- This section contains the list of addons you want to download
 
 The names of the addons should be extracted from the **URLs** of the addons' pages.<br>
 Lets say for example that you want to download **Deadly Boss Mods**.<br>
