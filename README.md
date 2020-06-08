@@ -20,7 +20,7 @@ There's also an executable file which can be found under the [releases](https://
 
 ## How It Works
 Before running the `wow_addons_updater.py` or `wow_addons_updater.exe`, you need to configure which addons you want to download.<br>
-This is done in the `wow_addons_updater.ini`file which looks like this:
+This is done in the `wow_addons_updater.ini` file which looks like this:
 ```
 [General]
 game_version = retail
