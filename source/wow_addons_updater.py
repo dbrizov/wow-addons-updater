@@ -65,7 +65,7 @@ def find_addon_latest_version(addon_name, game_version):
     log(f"Collecting '{addon_name}'")
 
     try:
-        url = f"{BASE_URL}/wow/addons/{addon_name}/files/all?filter-game-version={game_version}"
+        url = f"{BASE_URL}/wow/addons/{addon_name}/files/all?filter-game-version={game_version}&sort=releasetype"
         response = HTTP.get(url, timeout=HTTP_REQUEST_TIMEOUT)
         response.raise_for_status()
 
@@ -89,6 +89,7 @@ def find_addon_latest_version(addon_name, game_version):
     except ConnectionError:
         log_error("Error: Can't connect to server")
 
+    log_error(f"Error: '{addon_name}' not found")
     return None
 
 
