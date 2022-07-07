@@ -74,11 +74,11 @@ def find_addon_latest_version(addon_name, game_version):
 
         for row in rows[1:]:
             cols = row.find_all("td")
-            release_type = cols[0].text.strip()
+            release_type = cols[0].text.replace(' ', '').replace('\r', '').replace('\n', '').strip()
 
             if release_type == "R":  # R stands for Release
-                addon_version = cols[1].text.strip()
-                addon_game_version = cols[4].text.strip()
+                addon_version = cols[1].text.replace(' ', '').replace('\r', '').replace('\n', '').strip()
+                addon_game_version = cols[4].text.replace(' ', '').replace('\r', '').replace('\n', '').strip()
                 addon_url = f"{BASE_URL}{cols[1].find('a')['href']}"
                 addon = Addon(addon_name, addon_version, addon_game_version, addon_url)
                 return addon
