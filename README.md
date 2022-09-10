@@ -42,7 +42,7 @@ weakauras-2
 ```
 
 **[General]**
-- **game_version** - if you are playing WoW Classic, you must replace `retail` with `classic`
+- **game_version** - `retail`, `classic` or `wotlk`
 - **download_directory** - this is the path to your addons folder
 
 **[Addons]**

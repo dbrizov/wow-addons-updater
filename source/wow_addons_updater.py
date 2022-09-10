@@ -12,6 +12,7 @@ from bs4 import BeautifulSoup
 BASE_URL = "https://www.curseforge.com"
 GAME_VERSION_RETAIL = "1738749986%3A517"  # URL argument for retail addons
 GAME_VERSION_CLASSIC = "1738749986%3A67408"  # URL argument for classic addons
+GAME_VERSION_WOTLK = "1738749986%3A73713"  # URL argument for WOTLK addons
 HTTP = cloudscraper.create_scraper()  # HTTP requester
 HTTP_REQUEST_TIMEOUT = 15  # 15 seconds
 FILE_NAME = "wow_addons_updater.py"  # For some reason the build tool doesn't recognize '__file__' so I have to hardcode the name of the script file
@@ -138,7 +139,11 @@ def extract_addon(addon: Addon):
 def collect_addons():
     config = get_config()
     game_version_string = config["General"]["game_version"]
-    game_version = GAME_VERSION_RETAIL if (game_version_string == "retail") else GAME_VERSION_CLASSIC
+    game_version = GAME_VERSION_RETAIL
+    if game_version_string == "classic":
+        game_version = GAME_VERSION_CLASSIC
+    elif game_version_string == "wotlk":
+        game_version = GAME_VERSION_WOTLK
     addon_names = config["Addons"]
 
     found_addons = list()
