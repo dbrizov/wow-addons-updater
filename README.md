@@ -16,7 +16,7 @@ pip install bs4
 pip install cloudscraper
 ```
 
-There's also an executable file which can be found under the [releases](https://github.com/dbrizov/wow-addons-updater/releases) tab. You need version 1.3+
+There's also an executable file which can be found under the [releases](https://github.com/dbrizov/wow-addons-updater/releases) tab.
 
 ## How It Works
 Before running the `wow_addons_updater.py` or `wow_addons_updater.exe`, you need to configure which addons you want to download.<br>
